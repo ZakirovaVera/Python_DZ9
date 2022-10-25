@@ -9,7 +9,7 @@ complex_operation = None
 text_message = ""
 is_entered = False
 
-async def start_calc(app: Application, update, operation):
+async def start_calc_com(app: Application, update, operation):
     log(update)
     global complex_operation
     complex_operation = operation
@@ -64,7 +64,7 @@ async def calc(update: Update):
     else:
         res = c1 / c2
     log_in(update, complex_operation, c1, c2, res)
-    await update.message.reply_text( f"Результат {res}.")
+    await update.message.reply_text( f"Результат {res}")
     
     value2 = None
     value1 = None

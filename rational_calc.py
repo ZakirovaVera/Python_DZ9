@@ -1,6 +1,7 @@
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, Application
 from telegram import Update
 from log import *
+from fractions import Fraction
 
 
 value1 = None
@@ -9,7 +10,7 @@ complex_operation = None
 text_message = ""
 is_entered = False
 
-async def start_calc(app: Application, update, operation):
+async def start_calc_rat(app: Application, update, operation):
     log(update)
     global complex_operation
     complex_operation = operation
@@ -29,17 +30,17 @@ async def answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.message.text
     try:
         items = msg.split()
-        x = float(items[1])
-        y = float(items[2])
+        x = int(items[1])
+        y = int(items[2])
         if y == 0:
             await update.message.reply_text("Неверный ввод знаменателя. Попробуйте ещё раз.")
             return
         if value1 == None:
-            value1 = [x, y]
+            value1 = Fraction(x, y)
             await question(update)
             return
         if value2 == None:
-            value2 = [x, y]
+            value2 =  Fraction(x, y)
             await calc(update)
     except ValueError:
         await update.message.reply_text("Неверный ввод. Попробуйте ещё раз.") 
@@ -51,23 +52,23 @@ def change_text():
         num = 1
     elif(value2 == None):
         num = 2
-    text_message = f"Введите команду /part, в сообщении через пробел мнимую и вещественную часть {num} комплексного числа."
+    text_message = f"Введите команду /part, в сообщении через пробел числитель и знаменатель {num} рационального числа."
 
 async def calc(update: Update):
     global value1
-    global value2 
-    c1 = complex(value1[0], value1[1])
-    c2 = complex(value2[0], value2[1])
-    if complex_operation == 1:
-        res = c1 + c2
-    elif complex_operation == 2:
-        res = c1 - c2
-    elif complex_operation == 3:
-        res = c1 * c2
+    global value2
+    if complex_operation == 11:
+        res = value1 + value2
+    elif complex_operation == 22:
+        res = value1 - value2
+    elif complex_operation == 33:
+        res = value1 * value2
+    elif complex_operation == 44:
+        res = value1 / value2
     else:
-        res = c1 / c2
-    log_in(update, complex_operation, c1, c2, res)
-    await update.message.reply_text( f"Результат {res}.")
+        res = value1 % value2
+    log_in(update, complex_operation, value1, value2, res)
+    await update.message.reply_text( f"Результат {res}")
     
     value2 = None
     value1 = None

@@ -18,7 +18,6 @@ async def start_calc_rat(app: Application, update, operation):
     await question(update)
 
 async def question(update: Update):
-    log(update)
     change_text()
     await update.message.reply_text(text_message)
 

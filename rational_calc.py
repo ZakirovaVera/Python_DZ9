@@ -14,7 +14,7 @@ async def start_calc_rat(app: Application, update, operation):
     log(update)
     global complex_operation
     complex_operation = operation
-    app.add_handler(CommandHandler("part", answer))
+    app.add_handler(CommandHandler("calc_rat", answer))
     await question(update)
 
 async def question(update: Update):
@@ -52,7 +52,7 @@ def change_text():
         num = 1
     elif(value2 == None):
         num = 2
-    text_message = f"Введите команду /part, в сообщении через пробел числитель и знаменатель {num} рационального числа."
+    text_message = f"Введите команду /calc_rat, в сообщении через пробел числитель и знаменатель {num} рационального числа."
 
 async def calc(update: Update):
     global value1

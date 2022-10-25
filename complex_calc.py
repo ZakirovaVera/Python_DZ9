@@ -13,7 +13,7 @@ async def start_calc_com(app: Application, update, operation):
     log(update)
     global complex_operation
     complex_operation = operation
-    app.add_handler(CommandHandler("part", answer))
+    app.add_handler(CommandHandler("calc_com", answer))
     await question(update)
 
 async def question(update: Update):
@@ -48,7 +48,7 @@ def change_text():
         num = 1
     elif(value2 == None):
         num = 2
-    text_message = f"Введите команду /part, в сообщении через пробел мнимую и вещественную часть {num} комплексного числа."
+    text_message = f"Введите команду /calc_com, в сообщении через пробел мнимую и вещественную часть {num} комплексного числа."
 
 async def calc(update: Update):
     global value1
